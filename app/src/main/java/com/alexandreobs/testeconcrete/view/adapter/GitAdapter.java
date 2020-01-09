@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandreobs.testeconcrete.R;
-import com.alexandreobs.testeconcrete.model.pojo.Item;
+import com.alexandreobs.testeconcrete.model.pojo.repositorio.Item;
 import com.alexandreobs.testeconcrete.view.interfaces.RepositorioOnClick;
 import com.squareup.picasso.Picasso;
 
@@ -36,9 +36,16 @@ public class GitAdapter extends RecyclerView.Adapter<GitAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Item result = this.resultList.get(position);
+       final Item result = this.resultList.get(position);
         holder.onBind(result);
-        
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                repositorioOnClick.OnClick(result);
+            }
+        });
+
     }
     
 
@@ -48,11 +55,13 @@ public class GitAdapter extends RecyclerView.Adapter<GitAdapter.ViewHolder> {
     }
 
     public void update(List<Item> results) {
-        this.resultList.clear();
-        this.resultList= results;
+        if (this.resultList.isEmpty()){
+            this.resultList = results;
+        } else {
+            this.resultList.addAll(results);
+        }
         notifyDataSetChanged();
     }
-
     public void clear() {
         this.resultList.clear();
         notifyDataSetChanged();
@@ -93,4 +102,5 @@ public class GitAdapter extends RecyclerView.Adapter<GitAdapter.ViewHolder> {
         }
 
     }
+
 }

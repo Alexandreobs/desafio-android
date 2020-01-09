@@ -1,6 +1,6 @@
 package com.alexandreobs.testeconcrete.model.data.remote;
 
-import com.facebook.stetho.okhttp3.BuildConfig;
+import com.alexandreobs.testeconcrete.BuildConfig;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.util.concurrent.TimeUnit;

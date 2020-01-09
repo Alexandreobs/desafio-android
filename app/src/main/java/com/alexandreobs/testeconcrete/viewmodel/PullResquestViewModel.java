@@ -17,29 +17,30 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class RepositorioViewModel extends AndroidViewModel {
+public class PullResquestViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<Item>> listaDeRepositorios = new MutableLiveData<>();
+    private MutableLiveData<List<Item>> listaPull = new MutableLiveData<>();
     private GitRepository gitRepository = new GitRepository();
     private CompositeDisposable disposable = new CompositeDisposable();
     private MutableLiveData<Boolean> loading = new MutableLiveData<>();
 
-    public RepositorioViewModel(@NonNull Application application) {
+
+    public PullResquestViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public LiveData<List<Item>> getListaRespositorios(){
-        return this.listaDeRepositorios;
+
+    public LiveData<List<Item>> getListaPullRe(){
+        return this.listaPull;
     }
 
     public LiveData<Boolean> getLoading(){
         return this.loading;
     }
 
-
-    public void getRepositorios(int pagina){
+    public void getPullRes(String login, String name, int pagina){
         disposable.add(
-                gitRepository.getRepo(pagina)
+                gitRepository.getPullReq(login, name, pagina)
 
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -48,7 +49,7 @@ public class RepositorioViewModel extends AndroidViewModel {
                             loading.setValue(false);
                         })
                         .subscribe(gitResult -> {
-                                    listaDeRepositorios.setValue(gitResult.getItems());
+                                    listaPull.setValue(gitResult.getItems());
                                 },
                                 throwable -> {
                                     Log.i("LOG", "Erro" + throwable.getMessage());
@@ -57,5 +58,6 @@ public class RepositorioViewModel extends AndroidViewModel {
         );
 
     }
+
 }
 

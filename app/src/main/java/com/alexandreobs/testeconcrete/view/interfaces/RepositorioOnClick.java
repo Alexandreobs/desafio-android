@@ -1,9 +1,9 @@
 package com.alexandreobs.testeconcrete.view.interfaces;
 
-import com.alexandreobs.testeconcrete.model.pojo.GitResult;
+import com.alexandreobs.testeconcrete.model.pojo.repositorio.Item;
 
 public interface RepositorioOnClick {
 
-    void OnClick (GitResult result);
 
+    void OnClick(Item result);
 }

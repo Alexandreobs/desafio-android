@@ -8,55 +8,48 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.alexandreobs.testeconcrete.R;
-import com.alexandreobs.testeconcrete.model.pojo.repositorio.GitResult;
+import com.alexandreobs.testeconcrete.model.pojo.pullrequest.PullResult;
 import com.alexandreobs.testeconcrete.model.pojo.repositorio.Item;
-import com.alexandreobs.testeconcrete.view.adapter.GitAdapter;
-import com.alexandreobs.testeconcrete.view.interfaces.RepositorioOnClick;
+import com.alexandreobs.testeconcrete.view.adapter.PullAdapter;
+import com.alexandreobs.testeconcrete.view.interfaces.PullRequestOnClick;
+import com.alexandreobs.testeconcrete.viewmodel.PullResquestViewModel;
 import com.alexandreobs.testeconcrete.viewmodel.RepositorioViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements RepositorioOnClick {
+public class PullReqActivity extends AppCompatActivity implements PullRequestOnClick {
 
+    private TextView numeroOpen;
+    private TextView numeroClosed;
     private RecyclerView recyclerView;
-    private RepositorioViewModel viewModel;
-    private GitAdapter adapter;
-    private List<Item> itemList = new ArrayList<>();
+    private PullAdapter adapter;
+    private PullResquestViewModel viewModel;
+    private String login;
+    private String name;
+    private List<PullResult> itemList = new ArrayList<>();
     private ProgressBar progressBar;
-    private  int pagina = 1;
-
+    private int pagina = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_pull_req);
 
+        initView();
 
-        recyclerView = findViewById(R.id.recyclerRepos);
-        viewModel = ViewModelProviders.of(this).get(RepositorioViewModel.class);
-        adapter = new GitAdapter(itemList, this);
+        if (getIntent() != null) {
+            Item item = getIntent().getParcelableExtra("Item");
+           login = item.getOwner().getLogin();
+            name = item.getName();
+        }
 
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-        setScrollView();
-
-        viewModel.getRepositorios(pagina);
-        viewModel.getListaRespositorios().observe(this, new Observer<List<Item>>() {
-            @Override
-            public void onChanged(List<Item> results1) {
-                adapter.update(results1);
-            }
-        });
-
-        progressBar = findViewById(R.id.progress_bar);
         viewModel.getLoading().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean loading) {
@@ -68,17 +61,27 @@ public class MainActivity extends AppCompatActivity implements RepositorioOnClic
             }
         });
 
+
+    }
+
+
+
+    private void initView() {
+
+        viewModel = ViewModelProviders.of(this).get(PullResquestViewModel.class);
+        adapter = new PullAdapter(itemList, this);
+
+        progressBar = findViewById(R.id.progress_bar);
+        recyclerView = findViewById(R.id.recyclerPUll);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
+        setScrollView();
     }
 
     @Override
-    public void OnClick(Item result) {
-        Intent intent = new Intent(MainActivity.this, PullReqActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("Item", result);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
+    public void PullOnClick(PullResult result) {
 
+    }
 
     private void setScrollView(){
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements RepositorioOnClic
 
                 if (totalItemCount > 0 && ultimoItem){
                     pagina++;
-                    viewModel.getRepositorios(pagina);
+                    viewModel.getPullRes(login, name, pagina);
                 }
 
             }

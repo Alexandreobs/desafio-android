@@ -17,16 +17,18 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:text="TextView"
+        android:textStyle="bold"
         android:textColor="@color/colorAzulGit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/DescriRepo"
-        android:layout_width="225dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
         android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/fotoPerfilCard"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,10 +36,10 @@
 
     <TextView
         android:id="@+id/ForksRepo"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="15dp"
 
         android:text="TextView"
         android:textColor="@color/colorDourado"
@@ -48,7 +50,7 @@
         android:id="@+id/numeroStars"
         android:layout_width="63dp"
         android:layout_height="24dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="15dp"
         android:text="TextView"
         android:textColor="@color/colorDourado"
         app:layout_constraintEnd_toStartOf="@+id/fotoPerfilCard"
@@ -58,8 +60,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/fotoPerfilCard"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="69dp"
+        android:layout_height="66dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@+id/UserNameLogin"
@@ -71,14 +73,15 @@
         android:id="@+id/UserNameLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="11dp"
         android:layout_marginEnd="10dp"
+        android:gravity="center"
         android:text="TextView"
         android:textColor="@color/colorAzulGit"
-        android:gravity="center"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/DescriRepo"
+        app:layout_constraintStart_toEndOf="@+id/numeroStars"
         app:layout_constraintTop_toBottomOf="@+id/fotoPerfilCard" />
 
     <TextView
@@ -91,7 +94,7 @@
         android:gravity="center"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/DescriRepo"
+        app:layout_constraintStart_toEndOf="@+id/numeroStars"
         app:layout_constraintTop_toBottomOf="@+id/UserNameLogin" />
 
     <ImageView
@@ -99,7 +102,7 @@
         android:layout_width="32dp"
         android:layout_height="27dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toStartOf="@+id/ForksRepo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DescriRepo"
